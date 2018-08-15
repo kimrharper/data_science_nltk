@@ -1,3 +1,5 @@
 *.tsv
 *.csv
 *.bin
+dask-worker-space/
+.ipynb_checkpoints/
