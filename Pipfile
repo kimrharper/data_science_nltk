@@ -8,6 +8,7 @@ numpy = "*"
 jupyterlab = "*"
 opencv-python = "*"
 matplotlib = "*"
+pillow = "*"
 
 [dev-packages]
 
