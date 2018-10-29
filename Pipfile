@@ -4,11 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-numpy = "*"
 jupyterlab = "*"
-opencv-python = "*"
-matplotlib = "*"
-pillow = "*"
 
 [dev-packages]
 
