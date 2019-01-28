@@ -4,6 +4,7 @@ from sklearn import preprocessing; from scipy import stats
 from sklearn.preprocessing import PowerTransformer
 from scipy.stats import normaltest
 from scipy.stats import ttest_ind, ks_2samp
+from scipy.stats import describe
 
 # settings
 np.seterr(divide='warn', invalid='warn'); sns.set_style("whitegrid");warnings.filterwarnings('ignore')
@@ -31,6 +32,7 @@ def sample_test(df,c, test, p_threshold):
 def plot_dist(df, col_index, transformed):
     c = df.columns[col_index]
     normed = distribution_assignment(df[c])
+    print(describe(df[c]))
     s_3 = df[c][np.abs(df[c]-df[c].mean()) <= (3*df[c].std())] # Keep inner 99.7 % of the Data
     s_1 = df[c][np.abs(df[c]-df[c].mean()) <= (1*df[c].std())] # Keep inner 68% of the Data
     transformed = transformed[~np.isnan(transformed)]          # Show the complete transformation of mf_num_data
