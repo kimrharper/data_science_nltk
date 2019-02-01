@@ -6,36 +6,30 @@ import numpy as np
 import warnings
 from sklearn import preprocessing
 from scipy import stats
+import dask.dataframe as dd
+from dask.distributed import Client
 
 # Import Files
-mf_num_data = pd.read_csv('bosch_big_data/train_numeric.csv',low_memory=False)
-mf_date_data = pd.read_csv('bosch_big_data/train_date.csv',low_memory=False)
-mf_num_test = pd.read_csv('bosch_big_data/test_numeric.csv',low_memory=False)
-mf_date_test = pd.read_csv('bosch_big_data/test_date.csv',low_memory=False)
+mf_num_data = dd.read_csv('bosch_big_data/train_numeric.csv',low_memory=False)
+mf_date_data = dd.read_csv('bosch_big_data/train_date.csv',low_memory=False)
+mf_num_test_data = dd.read_csv('bosch_big_data/test_numeric.csv',low_memory=False)
+mf_date_Test_data = dd.read_csv('bosch_big_data/test_date.csv',low_memory=False)
 
-mf_test_merged = mf_num_test.append(mf_date_test)
+mf_merged_train = mf_num_data.append(mf_date_data)
+mf_merged_test = mf_num_test_data.append(mf_date_Test_data)
 
-
-# process X values with imputation if needed
-def process_data(df, imbalance):
-    df = df.fillna(df.mean())
-    df = df.dropna(axis=1, how='all')
-    y = df.iloc[:,-1]
-    X = df.iloc[:,:-1]
+def process_data(dd):
+    dd = dd.fillna(dd.mean())
+    dd = dd.dropna(how='all')
+    y = dd.iloc[:,-1]
+    X = dd.iloc[:,:-1]
     Xtr,ytr, = X, y
     
-    test_data = mf_test_merged.fillna(df.mean())
-    test_data = test_data.dropna(axis=1, how='all')
-    yte = test_data.iloc[:,-1]
+    test_data = mf_merged_test.fillna(mf_merged_test.mean())
+    test_data = test_data.dropna(how='all')
     Xte = test_data.iloc[:,:-1]
 
     Xtr, Xte = Xtr.fillna(Xtr.mean()), Xte.fillna(Xte.mean()) 
-    
-    if imbalance:
-        Xtr['Response'] = ytr
-        Xtr = fix_imbalance(Xtr, 2)
-        ytr = Xtr['Response']
-        del Xtr['Response']
-        Xtr = Xtr
+
         
-    return Xtr.values, Xte.values, ytr.values, yte.values
+    return Xtr.values, Xte.values, ytr.values
