@@ -18,7 +18,7 @@ mf_date_data = pd.read_csv('bosch_small_data/train_date.csv',low_memory=False)
 def distribution_assignment(sample):
     k2, p = normaltest(sample, nan_policy='omit')
     alpha = 0.00001  # null hypothesis: Sample comes from a normal distribution
-    dist = 'Normally Distributed' if p > alpha else 'Not Normally Distributed'
+    dist = 'Normally Distributed' if p < alpha else 'Not Normally Distributed'
     return dist
 
 def sample_test(df,c, test, p_threshold):
