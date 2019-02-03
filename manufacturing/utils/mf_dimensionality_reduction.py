@@ -27,7 +27,9 @@ from sklearn.metrics import make_scorer
 
 # Import Files
 mf_num_data = pd.read_csv('bosch_small_data/train_numeric.csv',low_memory=False)
+print('train_numeric.csv loaded...')
 mf_date_data = pd.read_csv('bosch_small_data/train_date.csv',low_memory=False)
+print('train_date.csv loaded...')
 
 # settings
 np.seterr(divide='warn', invalid='warn'); sns.set_style("whitegrid");warnings.filterwarnings('ignore')

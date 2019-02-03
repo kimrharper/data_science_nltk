@@ -11,8 +11,11 @@ np.seterr(divide='warn', invalid='warn'); sns.set_style("whitegrid");warnings.fi
 
 # Import Files
 mf_num_data = pd.read_csv('bosch_small_data/train_numeric.csv',low_memory=False)
-mf_cat_data = pd.read_csv('bosch_small_data/train_cat.csv',low_memory=False)
+print('train_numeric.csv loaded...')
 mf_date_data = pd.read_csv('bosch_small_data/train_date.csv',low_memory=False)
+print('train_date.csv loaded...')
+mf_cat_data = pd.read_csv('bosch_small_data/train_cat.csv',low_memory=False)
+print('train_cat.csv loaded...')
 
 # Function for determining params of sample distribution
 def distribution_assignment(sample):
