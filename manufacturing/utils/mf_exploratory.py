@@ -31,6 +31,7 @@ exec("try: import pygraphviz as pgv\nexcept: problem=import_fail = True")
 mf_num_data = pd.read_csv('bosch_small_data/train_numeric.csv',low_memory=False)
 print('train_numeric.csv loaded...')
 mf_date_data = pd.read_csv('bosch_small_data/train_date.csv',low_memory=False)
+time_series_plot = mf_date_data[['final_time','Response']] # Append the 'last time' series as a new column
 print('train_date.csv loaded...')
 mf_cat_data = pd.read_csv('bosch_small_data/train_cat.csv',low_memory=False)
 print('train_cat.csv loaded...')
