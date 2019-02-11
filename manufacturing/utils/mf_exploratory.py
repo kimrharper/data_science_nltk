@@ -31,7 +31,6 @@ exec("try: import pygraphviz as pgv\nexcept: problem=import_fail = True")
 mf_num_data = pd.read_csv('bosch_small_data/train_numeric.csv',low_memory=False)
 print('train_numeric.csv loaded...')
 mf_date_data = pd.read_csv('bosch_small_data/train_date.csv',low_memory=False)
-time_series_plot = mf_date_data[['final_time','Response']] # Append the 'last time' series as a new column
 print('train_date.csv loaded...')
 mf_cat_data = pd.read_csv('bosch_small_data/train_cat.csv',low_memory=False)
 print('train_cat.csv loaded...')
@@ -102,6 +101,19 @@ def final_time(df,row_ind):
     return time,response
 
 def plot_time_series(kde):
+    # Iterate through the columns to get the last time value
+    last_time =[]
+    for i in range(len(mf_date_data.iloc[:,1:-1])):
+        try:
+            lt, sc = final_time(mf_date_data,i)
+            last_time.append(lt)
+        except:
+            last_time.append(0)
+    mf_date_data['final_time'] = last_time
+    
+    time_series_plot = mf_date_data[['final_time','Response']] # Append the 'last time' series as a new column
+
+
     fig = plt.figure(figsize=(20,7))
     g = sns.distplot(time_series_plot['final_time'][time_series_plot['Response']==0], kde=kde)
     g = sns.distplot(time_series_plot['final_time'][time_series_plot['Response']==1], kde=kde ,color='purple')
